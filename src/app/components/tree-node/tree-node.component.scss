@@ -1,0 +1,75 @@
+@import "../../../styles/variables";
+
+
+$animation-speed: 0.4s;
+:host {
+  display: block;
+  font-size: 1.4rem;
+}
+
+.title {
+  text-decoration: none;
+  
+  .text {
+    text-decoration: underline;
+  }
+  
+  .arrow {
+    display: inline-block;
+    transition: transform $animation-speed;
+  }
+  
+  &.expanded {
+    .arrow {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.children {
+  height: 0;
+  overflow: hidden;
+  padding-left: 20px;
+  transition: all $animation-speed;
+  //perspective: 200px;
+  //transform: rotateX(-90deg); // fun :)
+  //transform-origin: center top;
+  transform: translateX(50px);
+  opacity: 0;
+  
+  &.expanded {
+    height: auto;
+    opacity: 1;
+    transform: initial;
+  }
+  
+  &.root {
+    padding-left: 4px;
+  }
+
+  tree-node {
+    margin: 3px 0;
+  }
+}
+
+.item-form {
+  input {
+    font-size: 1em;
+    max-width: 200px;
+  }
+  
+  .arrow {
+    color: $base-color-link;
+    opacity: 0.5;
+  }
+}
+
+.fa {
+  opacity: 0.6;
+  transition: opacity 0.6s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}

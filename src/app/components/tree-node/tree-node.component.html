@@ -1,0 +1,18 @@
+<ng-container *ngIf="!data.isRoot">
+  <a class="title" [ngClass]="{expanded: data.isExpanded}" href="javascript: void(0);" (click)="onTitleClick()">
+    <span class="arrow" aria-hidden="true">&#9656;</span>
+    <span class="text">{{data.title}}</span>
+  </a>
+  <i class="fa fa-trash js-delete-btn" title="Delete item" (click)="onDeleteClick()"></i>
+</ng-container>
+
+<div class="children" [ngClass]="{expanded: data.isExpanded, root: data.isRoot}">
+  <tree-node *ngFor="let child of data.children; trackBy: trackByIndex; let index = index;" [index]="index" [data]="child"
+    (toggleClick)="onChildToggleClick($event)" (deleteClick)="onChildDeleteClick($event)" (addItemSubmit)="onChildAddBtnClick($event)">
+  </tree-node>
+  <div class="item-form" [formGroup]="form">
+    <span class="arrow" aria-hidden="true">&#9656;</span>
+    <input type="text" formControlName="title" [maxlength]="titleMaxLength" placeholder="New item title" (keydown.enter)="onAddBtnClick()" />
+    <i class="fa fa-plus-circle js-add-btn" title="Add item" (click)="onAddBtnClick()"></i>
+  </div>
+</div>

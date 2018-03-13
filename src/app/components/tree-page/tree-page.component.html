@@ -1,0 +1,6 @@
+<tree-node
+  [data]="treeRoot | async"
+  (toggleClick)="onNodeToggleClick($event)" 
+  (deleteClick)="onNodeDeleteClick($event)"
+  (addItemSubmit)="onNodeAddItemSubmit($event)">
+</tree-node>
