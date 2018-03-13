@@ -20,7 +20,11 @@ export class TreeNodeComponent implements OnInit {
   @Output() addItemSubmit = new EventEmitter<TreeAddItemSubmitEvent>();
 
   form: FormGroup;
-  
+
+  /**
+   * Returns index as array of one element or empty array of index is undefined
+   * @returns {number[]}
+   */
   get spreadableIndex(): number[] {
     return typeof this.index === 'undefined' ? [] : [this.index];
   }
@@ -35,25 +39,33 @@ export class TreeNodeComponent implements OnInit {
     });
   }
 
+  /**
+   * Tracking function for better DOM reuse because of immutability
+   * @param {number} index
+   * @param {TreeNode} item
+   * @returns {any}
+   */
   trackByIndex(index: number, item: TreeNode): any {
-    return index + item.title;
+    return index + item.title; // not ideal, but allows to go without 
   }
   
   onTitleClick() {
+    // Passing path
     this.toggleClick.emit([...this.spreadableIndex]);
   }
 
   onChildToggleClick(event: TreePath) {
-    // Bubble up child event
+    // Bubble up child event and build proper path
     this.toggleClick.emit([...this.spreadableIndex, ...event]);
   }
 
   onDeleteClick() {
+    // Passing path
     this.deleteClick.emit([...this.spreadableIndex]);
   }
 
   onChildDeleteClick(event: TreePath) {
-    // Bubble up child event
+    // Bubble up child event and build proper path
     this.deleteClick.emit([...this.spreadableIndex, ...event]);
   }
   
@@ -74,6 +86,7 @@ export class TreeNodeComponent implements OnInit {
   }
 
   onChildAddBtnClick(event: TreeAddItemSubmitEvent) {
+    // Bubble up child event and build proper path
     this.addItemSubmit.emit({
       ...event,
       path: [...this.spreadableIndex, ...event.path], // overriding path

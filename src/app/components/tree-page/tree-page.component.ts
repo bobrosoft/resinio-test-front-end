@@ -6,6 +6,8 @@ import {TreeState} from '../../reducers/tree.reducer';
 import {TreePath} from '../../models/tree-path.model';
 import {TreeAddItemSubmitEvent} from '../../models/tree-add-item-submit-event.model';
 import {TreeActions} from '../../actions/tree.actions';
+import {Observable} from 'rxjs/Observable';
+import {TreeNode} from '../../models/tree-node.model';
 
 @Component({
   selector: 'tree-page',
@@ -13,7 +15,7 @@ import {TreeActions} from '../../actions/tree.actions';
   styleUrls: ['./tree-page.component.scss']
 })
 export class TreePageComponent implements OnInit {
-  treeRoot = this.store.select('tree').map((s: TreeState) => s.rootNode);
+  treeRoot: Observable<TreeNode>;
 
   constructor(
     protected store: Store<AppState>,
@@ -21,6 +23,8 @@ export class TreePageComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Let's watch for three changes
+    this.treeRoot = this.store.select('tree').map((s: TreeState) => s.rootNode); // reactivity used here directly
   }
 
   onNodeToggleClick(event: TreePath) {
